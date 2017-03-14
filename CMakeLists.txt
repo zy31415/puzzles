@@ -10,6 +10,6 @@ add_subdirectory (src)
 add_subdirectory (test)
 enable_testing ()
 
-add_test(NAME mytest COMMAND mytest)
+add_test(NAME test_puzzle COMMAND test_puzzle_action test_puzzle_creation)
 
 

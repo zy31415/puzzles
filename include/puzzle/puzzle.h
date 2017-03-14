@@ -11,6 +11,7 @@
 
 using namespace std;
 
+#define DEFAULT_PUZZLE_SIZE 4
 
 class IllegalMove : public exception {
 public:
@@ -29,11 +30,13 @@ class Puzzle {
     int* arr;
 
 public:
-    Puzzle(size_t puzzle_size = 4);
+    Puzzle(size_t puzzle_size = DEFAULT_PUZZLE_SIZE);
+    Puzzle(int* arr, size_t puzzle_size = DEFAULT_PUZZLE_SIZE);
     ~Puzzle();
 
     // copy constructor
     Puzzle(const Puzzle &puzzle);
+    Puzzle& operator= (const Puzzle& other);
 
     int at(int nrow, int ncol) const;
 
@@ -41,16 +44,16 @@ public:
 
     // Define actions:
     bool can_left();
-    Puzzle left();
+    bool left();
 
     bool can_right();
-    Puzzle right();
+    bool right();
 
     bool can_up();
-    Puzzle up();
+    bool up();
 
     bool can_down();
-    Puzzle down();
+    bool down();
 
 };
 
