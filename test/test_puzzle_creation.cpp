@@ -11,8 +11,8 @@
 TEST_CASE("puzzle creation: default"){
     Puzzle puzzle;
 
-    for (int ii=0; ii < DEFAULT_PUZZLE_SIZE ; ii++)
-        for (int jj = 0; jj < DEFAULT_PUZZLE_SIZE; jj++)
+    for (int ii=0; ii < PUZZLE_SIZE ; ii++)
+        for (int jj = 0; jj < PUZZLE_SIZE; jj++)
             REQUIRE(puzzle.at(0, 0) == 0);
 }
 
