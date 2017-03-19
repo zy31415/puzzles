@@ -8,6 +8,7 @@
 #include <cstddef>
 #include <vector>
 #include <exception>
+#include <memory>
 
 using namespace std;
 
@@ -20,6 +21,10 @@ public:
     }
 };
 
+
+enum Action {UP, RIGHT, DOWN, LEFT};
+
+
 class Puzzle {
     static size_t puzzle_size;
     static size_t arr_length;
@@ -28,16 +33,16 @@ class Puzzle {
     size_t index0;
 
     int* arr;
+    
+    // private copy constructor, make sure no accidental copy out of class
+    Puzzle(const Puzzle &other);
+    Puzzle& operator= (const Puzzle& other);
 
 public:
     Puzzle();
     Puzzle(int* arr);
     ~Puzzle();
-
-    // copy constructor
-    Puzzle(const Puzzle &other);
-    Puzzle& operator= (const Puzzle& other);
-
+    
     bool equals(const Puzzle& other) const;
     bool operator == (const Puzzle& other) const;
 
@@ -48,16 +53,16 @@ public:
 
     // Define actions:
     bool can_left() const;
-    Puzzle left() const;
+    unique_ptr<Puzzle> left() const;
 
     bool can_right() const;
-    bool right();
+    unique_ptr<Puzzle> right() const;
 
     bool can_up() const;
-    bool up();
+    unique_ptr<Puzzle> up() const;
 
     bool can_down() const;
-    bool down();
+    unique_ptr<Puzzle> down() const;
 
 };
 

@@ -9,7 +9,7 @@
 #include <vector>
 #include <cassert>
 #include <stdexcept>
-#include <stdexcept>
+#include <memory>
 
 using namespace std;
 
@@ -65,14 +65,13 @@ Puzzle& Puzzle::operator=(const Puzzle &other) {
 
 bool Puzzle::equals(const Puzzle& other) const {
 
-    if (this->arr_length != other.puzzle_size) return false;
+    if (this->arr_length != other.arr_length && this->puzzle_size != other.puzzle_size) return false;
 
     if (this->index0 != other.index0) return false;
 
     for (int ii=0; ii<this->arr_length; ii++) {
         if (this->arr[ii] != other.arr[ii]) return false;
     }
-
     return true;
 }
 
@@ -97,10 +96,10 @@ bool Puzzle::can_left() const{
     return index0 % puzzle_size != 0;
 }
 
-Puzzle Puzzle::left() const{
-    Puzzle puzzle(*this);
-    swap(puzzle.arr[index0-1], puzzle.arr[index0]);
-    puzzle.index0 --;
+unique_ptr<Puzzle> Puzzle::left() const{
+    unique_ptr<Puzzle> puzzle(new Puzzle(*this));
+    swap(puzzle->arr[index0-1], puzzle->arr[index0]);
+    puzzle->index0 --;
     return puzzle;
 }
 
@@ -108,42 +107,35 @@ bool Puzzle::can_right() const{
     return index0 % puzzle_size < puzzle_size - 1 ;
 }
 
-bool Puzzle::right() {
-    if (can_right()) {
-        swap(arr[index0+1], arr[index0]);
-        index0 ++;
-        return true;
-    }
+unique_ptr<Puzzle> Puzzle::right() const{
+    unique_ptr<Puzzle> puzzle(new Puzzle(*this));
+    
+    swap(puzzle->arr[index0+1], puzzle->arr[index0]);
+    puzzle->index0 ++;
 
-    return false;
+    return puzzle;
 }
 
 bool Puzzle::can_up() const{
-    return index0 / puzzle_size > 0;
+    return index0 >= puzzle_size;
 }
 
-bool Puzzle::up() {
-    if (can_up()) {
-        swap(arr[index0-puzzle_size], arr[index0]);
-        index0 -= puzzle_size;
-        return true;
-    }
-
-    return false;
+unique_ptr<Puzzle> Puzzle::up() const{
+    unique_ptr<Puzzle> puzzle(new Puzzle(*this));
+    swap(puzzle->arr[index0-puzzle_size], puzzle->arr[index0]);
+    puzzle->index0 -= puzzle_size;
+    return puzzle;    
 }
 
 bool Puzzle::can_down() const {
-    return index0 / puzzle_size < puzzle_size - 1;
+    return index0 < arr_length -  puzzle_size;
 }
 
-bool Puzzle::down() {
-    if (can_down()) {
-        swap(arr[index0+puzzle_size], arr[index0]);
-        index0 += puzzle_size;
-        return true;
-    }
-
-    return false;
+unique_ptr<Puzzle> Puzzle::down() const {
+    unique_ptr<Puzzle> puzzle(new Puzzle(*this));
+    swap(puzzle->arr[index0+puzzle_size], puzzle->arr[index0]);
+    puzzle->index0 += puzzle_size;
+    return puzzle;
 }
 
 //////////////////////

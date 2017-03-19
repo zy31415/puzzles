@@ -31,4 +31,3 @@ TEST_CASE("puzzle creation: construct from an array.") {
 
 }
 
-
