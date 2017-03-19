@@ -10,6 +10,7 @@
 #include <cassert>
 #include <stdexcept>
 #include <memory>
+#include <iostream>
 
 using namespace std;
 
@@ -51,15 +52,19 @@ Puzzle::~Puzzle() {
 
 // copy constructor
 Puzzle::Puzzle(const Puzzle& other) {
+    cout<<"Copy constructor..."<<endl;
     arr = new int [arr_length];
     memcpy(this->arr, other.arr, sizeof(int)*arr_length);
     index0 = other.index0;
 }
 
 Puzzle& Puzzle::operator=(const Puzzle &other) {
+    cout << "Assignment constructor ..." << endl;
     if (this != &other) {
         memcpy(this->arr, other.arr, sizeof(int)*arr_length);
+        index0 = other.index0;
     }
+
     return *this;
 }
 
@@ -96,10 +101,11 @@ bool Puzzle::can_left() const{
     return index0 % puzzle_size != 0;
 }
 
-unique_ptr<Puzzle> Puzzle::left() const{
-    unique_ptr<Puzzle> puzzle(new Puzzle(*this));
-    swap(puzzle->arr[index0-1], puzzle->arr[index0]);
-    puzzle->index0 --;
+// Note that this function return an object and because return value optimization, there is actually no copying.
+Puzzle Puzzle::left() const{
+    Puzzle puzzle(*this);
+    swap(puzzle.arr[index0-1], puzzle.arr[index0]);
+    puzzle.index0 --;
     return puzzle;
 }
 
@@ -107,12 +113,10 @@ bool Puzzle::can_right() const{
     return index0 % puzzle_size < puzzle_size - 1 ;
 }
 
-unique_ptr<Puzzle> Puzzle::right() const{
-    unique_ptr<Puzzle> puzzle(new Puzzle(*this));
-    
-    swap(puzzle->arr[index0+1], puzzle->arr[index0]);
-    puzzle->index0 ++;
-
+Puzzle Puzzle::right() const{
+    Puzzle puzzle(*this);
+    swap(puzzle.arr[index0+1], puzzle.arr[index0]);
+    puzzle.index0 ++;
     return puzzle;
 }
 
@@ -120,10 +124,10 @@ bool Puzzle::can_up() const{
     return index0 >= puzzle_size;
 }
 
-unique_ptr<Puzzle> Puzzle::up() const{
-    unique_ptr<Puzzle> puzzle(new Puzzle(*this));
-    swap(puzzle->arr[index0-puzzle_size], puzzle->arr[index0]);
-    puzzle->index0 -= puzzle_size;
+Puzzle Puzzle::up() const{
+    Puzzle puzzle(*this);
+    swap(puzzle.arr[index0-puzzle_size], puzzle.arr[index0]);
+    puzzle.index0 -= puzzle_size;
     return puzzle;    
 }
 
@@ -131,13 +135,42 @@ bool Puzzle::can_down() const {
     return index0 < arr_length -  puzzle_size;
 }
 
-unique_ptr<Puzzle> Puzzle::down() const {
-    unique_ptr<Puzzle> puzzle(new Puzzle(*this));
-    swap(puzzle->arr[index0+puzzle_size], puzzle->arr[index0]);
-    puzzle->index0 += puzzle_size;
+Puzzle Puzzle::down() const {
+    Puzzle puzzle(*this);
+    swap(puzzle.arr[index0+puzzle_size], puzzle.arr[index0]);
+    puzzle.index0 += puzzle_size;
     return puzzle;
 }
 
+vector<Puzzle> Puzzle::next() const {
+    vector<Puzzle> res;
+    if (can_up()) {
+        res.push_back(up());
+    }
+
+    if (can_right()) {
+        res.push_back(right());
+    }
+
+    if (can_down()) {
+        res.push_back(down());
+    }
+
+    if (can_left()) {
+        res.push_back(left());
+    }
+
+    return res;
+}
+
+
+bool Puzzle::is_goal()  const {
+    for (size_t ii = 0; ii<arr_length; ii++) {
+        if (arr[ii] == ii) return false;
+    }
+
+    return true;
+};
 //////////////////////
 
 

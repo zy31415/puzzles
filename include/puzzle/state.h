@@ -16,7 +16,7 @@ class State {
     shared_ptr<Puzzle> puzzle;
 
 public:
-    State(unique_ptr<Puzzle> puzzle);
+    State(shared_ptr<Puzzle> puzzle);
     vector<State> next();
     bool is_goal();
 

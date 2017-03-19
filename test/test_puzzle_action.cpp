@@ -30,9 +30,9 @@ TEST_CASE("puzzle action: left 1") {
     Puzzle puzzle0(arr0), puzzle1(arr1);
 
     REQUIRE(puzzle1.can_left());
-    unique_ptr<Puzzle> ptr = puzzle1.left();
+    Puzzle ptr = puzzle1.left();
 
-    REQUIRE(ptr->equals(puzzle0));
+    REQUIRE(ptr.equals(puzzle0));
 }
 
 TEST_CASE("puzzle action: down"){
@@ -115,17 +115,17 @@ TEST_CASE("puzzle action: left 2"){
     // Test move down
     REQUIRE(puzzle.can_left());
 
-    unique_ptr<Puzzle> ptr = puzzle.left();
+    Puzzle ptr = puzzle.left();
 
-    REQUIRE(ptr->at(0,2) == 2);
-    REQUIRE(ptr->at(0,1) == 0);
+    REQUIRE(ptr.at(0,2) == 2);
+    REQUIRE(ptr.at(0,1) == 0);
 
-    REQUIRE(ptr->can_left());
-    ptr = ptr->left();
+    REQUIRE(ptr.can_left());
+    ptr = ptr.left();
 
-    REQUIRE(ptr->at(0, 0) == 0);
+    REQUIRE(ptr.at(0, 0) == 0);
 
-    REQUIRE(!ptr->can_left());
+    REQUIRE(!ptr.can_left());
 
 }
 

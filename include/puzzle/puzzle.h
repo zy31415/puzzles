@@ -33,16 +33,16 @@ class Puzzle {
     size_t index0;
 
     int* arr;
-    
-    // private copy constructor, make sure no accidental copy out of class
-    Puzzle(const Puzzle &other);
-    Puzzle& operator= (const Puzzle& other);
 
 public:
     Puzzle();
     Puzzle(int* arr);
     ~Puzzle();
-    
+
+    // private copy constructor, make sure no accidental copy out of class
+    Puzzle(const Puzzle &other);
+    Puzzle& operator= (const Puzzle& other);
+
     bool equals(const Puzzle& other) const;
     bool operator == (const Puzzle& other) const;
 
@@ -53,16 +53,20 @@ public:
 
     // Define actions:
     bool can_left() const;
-    unique_ptr<Puzzle> left() const;
+    Puzzle left() const;
 
     bool can_right() const;
-    unique_ptr<Puzzle> right() const;
+    Puzzle right() const;
 
     bool can_up() const;
-    unique_ptr<Puzzle> up() const;
+    Puzzle up() const;
 
     bool can_down() const;
-    unique_ptr<Puzzle> down() const;
+    Puzzle down() const;
+
+    vector<Puzzle> next() const;
+
+    bool is_goal() const;
 
 };
 
