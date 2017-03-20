@@ -14,14 +14,14 @@ using namespace std;
 
 class State : public Puzzle {
 
+protected:
+    static State goal;
+
 public:
+    State();
     State(const Puzzle& puzzle);
-    vector<State> next() const;
     bool is_goal();
 
-    bool operator < (const State& other) const;
-
-    bool operator == (const State& other) const;
 };
 
 #endif //PUZZLES_STATE_H

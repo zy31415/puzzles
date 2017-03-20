@@ -18,7 +18,7 @@ size_t Puzzle::puzzle_size = PUZZLE_SIZE;
 size_t Puzzle::arr_length = PUZZLE_SIZE * PUZZLE_SIZE;
 
 
-shared_ptr<int> Puzzle::create_array() const {
+shared_ptr<int> Puzzle::create_array() {
     return shared_ptr<int> (new int[arr_length], std::default_delete<int[]>());
 }
 
@@ -52,6 +52,7 @@ Puzzle::Puzzle(int* arr) {
 
 Puzzle::~Puzzle() {}
 
+// Copy consructor, do shallow copy
 Puzzle::Puzzle(const Puzzle &other) {
     // Shallow copy
     this->arr = other.arr;
@@ -64,9 +65,6 @@ Puzzle& Puzzle::operator=(const Puzzle &other) {
     this->index0 = other.index0;
 }
 
-int& Puzzle::operator[](const size_t ii) {
-    return arr.get()[ii];
-}
 
 Puzzle Puzzle::deepcopy() const {
     Puzzle puzzle;
@@ -98,8 +96,12 @@ bool Puzzle::operator==(const Puzzle& other) const {
     return equals(other);
 }
 
-int Puzzle::at(const int nrow, const int ncol) const {
+int Puzzle::at(const size_t nrow, const size_t ncol) const {
     return arr.get()[nrow * puzzle_size + ncol];
+}
+
+int Puzzle::at(const size_t ii) const {
+    return arr.get()[ii];
 }
 
 void Puzzle::set_size(size_t size) {
@@ -109,6 +111,10 @@ void Puzzle::set_size(size_t size) {
 
 size_t Puzzle::size() {
     return puzzle_size;
+}
+
+size_t Puzzle::length() {
+    return arr_length;
 }
 
 bool Puzzle::can_left() const{
@@ -154,6 +160,26 @@ Puzzle Puzzle::down() const {
     swap(puzzle.arr.get()[index0+puzzle_size], puzzle.arr.get()[index0]);
     puzzle.index0 += puzzle_size;
     return puzzle;
+}
+
+bool Puzzle::can_move(Action action) const{
+    switch(action){
+        case Action::UP: return can_up();
+        case Action::RIGHT: return can_right();
+        case Action::DOWN: return can_down();
+        case Action::LEFT: return can_left();
+        default: return false;
+    }
+}
+
+Puzzle Puzzle::move(Action action) const {
+    switch(action){
+        case Action::UP: return up();
+        case Action::RIGHT: return right();
+        case Action::DOWN: return down();
+        case Action::LEFT: return left();
+        default: throw ;
+    }
 }
 
 

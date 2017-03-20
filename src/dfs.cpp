@@ -9,10 +9,9 @@
 using namespace std;
 
 #include "puzzle/node.h"
-#include "puzzle/state.h"
 
 #include <puzzle/dfs.h>
-
+#include "puzzle/explored_set.h"
 
 bool DFS::search(Node* root) {
 
@@ -21,7 +20,7 @@ bool DFS::search(Node* root) {
     frontier.push(root);
 
     // explored_set is a collection of *states*
-    set<State> explored_set;
+    ExploredSet explored_set;
 
     Node* node = nullptr;
 
@@ -29,10 +28,10 @@ bool DFS::search(Node* root) {
         node = frontier.top();
         frontier.pop();
 
-        if (explored_set.count(node->get_state()))
+        if (explored_set.visited(*node))
             continue;
 
-        explored_set.insert(node->get_state());
+        explored_set.add(*node);
 
         if (node->is_goal()) {
             goal = node;

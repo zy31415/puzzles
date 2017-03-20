@@ -35,12 +35,11 @@ protected:
 
     shared_ptr<int> arr;
 
-    int& operator[] (const size_t ii);
 
 private:
     Puzzle deepcopy() const;
 
-    shared_ptr<int> create_array() const;
+    static shared_ptr<int> create_array();
 
 public:
     Puzzle();
@@ -53,10 +52,13 @@ public:
     bool equals(const Puzzle& other) const;
     bool operator == (const Puzzle& other) const;
 
-    int at(int nrow, int ncol) const;
+    int at(size_t nrow, size_t ncol) const;
+    int at(size_t ii) const;
 
     static void set_size(size_t size);
     static size_t size();
+
+    static size_t length();
 
     // Define actions:
     bool can_left() const;
@@ -70,6 +72,9 @@ public:
 
     bool can_down() const;
     Puzzle down() const;
+
+    bool can_move(Action action) const;
+    Puzzle move(Action action) const;
 
 };
 

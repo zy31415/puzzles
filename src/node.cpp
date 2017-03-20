@@ -11,44 +11,17 @@ Node::Node(State state0): state(state0), parent(nullptr), action (Action::ZERO),
 vector<Node*> Node::next() {
     vector<Node*> res;
 
-    if (state.can_up()) {
-        // TODO: Maybe can be replaced with a smart pointer?
-        Node* node = new Node(state.up());
-        node->action = Action::UP;
-        node->parent = this;
-        node->path_cost = this->path_cost + 1;
+    vector<Action> actions {Action::UP, Action::RIGHT, Action::DOWN, Action::LEFT};
 
-        res.push_back(node);
-    }
-
-    if (state.can_right()) {
-        // TODO: Maybe can be replaced with a smart pointer?
-        Node* node = new Node(state.right());
-        node->action = Action::RIGHT;
-        node->parent = this;
-        node->path_cost = this->path_cost + 1;
-
-        res.push_back(node);
-    }
-
-    if (state.can_down()) {
-        // TODO: Maybe can be replaced with a smart pointer?
-        Node* node = new Node(state.down());
-        node->action = Action::DOWN;
-        node->parent = this;
-        node->path_cost = this->path_cost + 1;
-
-        res.push_back(node);
-    }
-
-    if (state.can_left()) {
-        // TODO: Maybe can be replaced with a smart pointer?
-        Node* node = new Node(state.left());
-        node->action = Action::LEFT;
-        node->parent = this;
-        node->path_cost = this->path_cost + 1;
-
-        res.push_back(node);
+    for (Action action : actions) {
+        if (state.can_move(action)) {
+            // TODO: Maybe can be replaced with a smart pointer?
+            Node* node = new Node(state.move(action));
+            node->action = action;
+            node->parent = this;
+            node->path_cost = this->path_cost + 1;
+            res.push_back(node);
+        }
     }
 
     return res;
