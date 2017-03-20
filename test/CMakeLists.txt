@@ -12,3 +12,6 @@ target_link_libraries(test_puzzle_action puzzle)
 add_executable(test_puzzle_equality test_puzzle_equality.cpp)
 target_link_libraries(test_puzzle_equality puzzle)
 
+
+add_executable(test_dfs test_dfs.cpp)
+target_link_libraries(test_dfs puzzle)

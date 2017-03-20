@@ -12,16 +12,16 @@ using namespace std;
 
 #include "puzzle.h"
 
-class State {
-    shared_ptr<Puzzle> puzzle;
+class State : public Puzzle {
 
 public:
-    State(shared_ptr<Puzzle> puzzle);
-    vector<State> next();
+    State(const Puzzle& puzzle);
+    vector<State> next() const;
     bool is_goal();
 
-    bool operator == (const State& other) const;
     bool operator < (const State& other) const;
+
+    bool operator == (const State& other) const;
 };
 
 #endif //PUZZLES_STATE_H

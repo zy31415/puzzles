@@ -28,3 +28,14 @@ void PuzzlePrinter::print(const Puzzle& puzzle) {
     }
 }
 
+void PuzzlePrinter::node_print(const Node &node) {
+    const Node* p = &node;
+
+    while (true) {
+        print(p->get_state());
+
+        if (!p->parent) return;
+
+        p = p->parent;
+    }
+}

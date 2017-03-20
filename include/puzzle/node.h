@@ -15,19 +15,21 @@ using namespace std;
 
 
 class Node {
+
+public:
     // use shared pointer, because a state could be shared by different node.
-    shared_ptr<State> state;
-    shared_ptr<Node> parent;
+    State state;
+    Node* parent;
     Action action;
     size_t path_cost;
 
-public:
+    Node(State state0);
 
-    vector<shared_ptr<Node>> next();
+    vector<Node*> next();
 
     bool is_goal();
 
-    shared_ptr<State> get_state();
+    State get_state() const;
 
 };
 

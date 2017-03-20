@@ -14,12 +14,12 @@ using namespace std;
 
 class DFS {
 
-    shared_ptr<Node> goal;
+    Node* goal;
 
 public:
-    bool search(shared_ptr<Node> node0);
+    bool search(Node* node0);
 
-    shared_ptr<Node> get_goal();
+    Node* get_goal();
 };
 
 #endif //PUZZLES_DFS_H

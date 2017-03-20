@@ -31,3 +31,12 @@ TEST_CASE("puzzle creation: construct from an array.") {
 
 }
 
+TEST_CASE("puzzle copy constructor") {
+    Puzzle::set_size(3);
+
+    Puzzle p1;
+
+    Puzzle p2(p1);
+
+    REQUIRE( p1 == p2);
+}

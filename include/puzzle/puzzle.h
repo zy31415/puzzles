@@ -22,24 +22,31 @@ public:
 };
 
 
-enum Action {UP, RIGHT, DOWN, LEFT};
+enum Action {UP, RIGHT, DOWN, LEFT, ZERO};
 
 
 class Puzzle {
+protected:
     static size_t puzzle_size;
     static size_t arr_length;
 
     // The index of the zero
     size_t index0;
 
-    int* arr;
+    shared_ptr<int> arr;
+
+    int& operator[] (const size_t ii);
+
+private:
+    Puzzle deepcopy() const;
+
+    shared_ptr<int> create_array() const;
 
 public:
     Puzzle();
     Puzzle(int* arr);
     ~Puzzle();
 
-    // private copy constructor, make sure no accidental copy out of class
     Puzzle(const Puzzle &other);
     Puzzle& operator= (const Puzzle& other);
 
@@ -63,10 +70,6 @@ public:
 
     bool can_down() const;
     Puzzle down() const;
-
-    vector<Puzzle> next() const;
-
-    bool is_goal() const;
 
 };
 

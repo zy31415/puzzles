@@ -44,17 +44,17 @@ TEST_CASE("puzzle action: down"){
     // Test move down
     REQUIRE(puzzle.can_down());
 
-    unique_ptr<Puzzle> ptr = puzzle.down();
+    Puzzle ptr = puzzle.down();
 
-    REQUIRE(ptr->at(0,0) == 3);
-    REQUIRE(ptr->at(1,0) == 0);
+    REQUIRE(ptr.at(0,0) == 3);
+    REQUIRE(ptr.at(1,0) == 0);
 
-    REQUIRE(ptr->can_down());
-    ptr = ptr->down();
+    REQUIRE(ptr.can_down());
+    ptr = ptr.down();
 
-    REQUIRE(ptr->at(2, 0) == 0);
+    REQUIRE(ptr.at(2, 0) == 0);
 
-    REQUIRE(!ptr->can_down());
+    REQUIRE(!ptr.can_down());
 
 }
 
@@ -67,17 +67,17 @@ TEST_CASE("puzzle action: right"){
     // Test move down
     REQUIRE(puzzle.can_right());
 
-    unique_ptr<Puzzle> ptr = puzzle.right();
+    Puzzle ptr = puzzle.right();
 
-    REQUIRE(ptr->at(0,0) == 1);
-    REQUIRE(ptr->at(0,1) == 0);
+    REQUIRE(ptr.at(0,0) == 1);
+    REQUIRE(ptr.at(0,1) == 0);
 
-    REQUIRE(ptr->can_right());
-    ptr = ptr->right();
+    REQUIRE(ptr.can_right());
+    ptr = ptr.right();
 
-    REQUIRE(ptr->at(0, 2) == 0);
+    REQUIRE(ptr.at(0, 2) == 0);
 
-    REQUIRE(!ptr->can_right());
+    REQUIRE(!ptr.can_right());
 
 }
 
@@ -91,17 +91,17 @@ TEST_CASE("puzzle action: up"){
     // Test move down
     REQUIRE(puzzle.can_up());
 
-    unique_ptr<Puzzle> ptr = puzzle.up();
+    Puzzle ptr = puzzle.up();
 
-    REQUIRE(ptr->at(2,2) == 6);
-    REQUIRE(ptr->at(1,2) == 0);
+    REQUIRE(ptr.at(2,2) == 6);
+    REQUIRE(ptr.at(1,2) == 0);
 
-    REQUIRE(ptr->can_up());
-    ptr = ptr->up();
+    REQUIRE(ptr.can_up());
+    ptr = ptr.up();
 
-    REQUIRE(ptr->at(0, 2) == 0);
+    REQUIRE(ptr.at(0, 2) == 0);
 
-    REQUIRE(!ptr->can_up());
+    REQUIRE(!ptr.can_up());
 
 }
 

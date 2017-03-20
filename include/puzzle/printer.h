@@ -6,12 +6,16 @@
 #define PUZZLES_PRINTER_H
 
 #include "puzzle.h"
+#include "node.h"
 
 class PuzzlePrinter {
     static const int WIDTH = 3;
     static const char EMPTY_CHAR = '*';
 public:
     static void print(const Puzzle& puzzle);
+
+    static void node_print(const Node& node);
+
 };
 
 
