@@ -35,6 +35,9 @@ bool DFS::search(Node* root) {
 
         if (node->is_goal()) {
             goal = node;
+
+            num_explored_set = explored_set.size();
+
             return true;
         }
         for (auto ni : node->next()) {
@@ -48,4 +51,8 @@ bool DFS::search(Node* root) {
 
 Node* DFS::get_goal() {
     return goal;
+}
+
+size_t DFS::get_num_explored_set() {
+    return num_explored_set;
 }

@@ -29,3 +29,8 @@ void ExploredSet::add(const Node& node) {
 bool ExploredSet::visited(const Node &node) {
     return explored_set.count(node.get_state()) == 1;
 }
+
+
+size_t ExploredSet::size() const {
+    return explored_set.size();
+}

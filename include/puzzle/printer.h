@@ -11,6 +11,9 @@
 class PuzzlePrinter {
     static const int WIDTH = 3;
     static const char EMPTY_CHAR = '*';
+
+    static void _node_print(const Node* node);
+
 public:
     static void print(const Puzzle& puzzle);
 

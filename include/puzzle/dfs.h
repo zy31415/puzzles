@@ -16,10 +16,17 @@ class DFS {
 
     Node* goal;
 
+    size_t num_explored_set;
+
 public:
     bool search(Node* node0);
 
     Node* get_goal();
+
+    size_t get_num_explored_set();
+
+    size_t num_frontier();
+
 };
 
 #endif //PUZZLES_DFS_H

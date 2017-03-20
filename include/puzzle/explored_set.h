@@ -21,6 +21,7 @@ public:
 
     virtual bool visited(const Node& node) = 0;
 
+    virtual size_t size() const = 0;
 };
 
 
@@ -35,7 +36,9 @@ public:
 
     void add(const Node& node);
 
-    virtual bool visited(const Node& node);
+    bool visited(const Node& node);
+
+    size_t size() const;
 
 };
 

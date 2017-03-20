@@ -5,6 +5,7 @@
 #include "puzzle/printer.h"
 #include <iostream>
 #include <iomanip>
+#include <stack>
 
 using namespace std;
 
@@ -28,14 +29,19 @@ void PuzzlePrinter::print(const Puzzle& puzzle) {
     }
 }
 
+void PuzzlePrinter::_node_print(const Node* node) {
+    cout << "-Step: " <<node->path_cost;
+    print(node->get_state());
+    cout << endl;
+}
+
 void PuzzlePrinter::node_print(const Node &node) {
     const Node* p = &node;
 
-    while (true) {
-        print(p->get_state());
-
-        if (!p->parent) return;
-
-        p = p->parent;
+    if (p->parent) {
+        node_print(*p->parent);
+        _node_print(p);
+        return;
     }
+    _node_print(p);
 }
